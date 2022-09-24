@@ -67,13 +67,18 @@ const todoSlice = createSlice({
     initialState: initialState,
     reducers: {
 addTodos: (state,action)=>{
-    // const{name,age}=action.payload;
-    console.log("hi");
-state.todos.push(initialState);
+ 
+state.todos.push(action.payload);
 },
+deleteTodo: (state,action)=>{
+   const newItems = state.todos.filter((item,index)=>{
+      return index !== action.payload;
+   })
+   state.todos = newItems;
+}
 
     },
 })
 
-export const {addTodos} = todoSlice.actions;
+export const {addTodos,deleteTodo} = todoSlice.actions;
 export default todoSlice.reducer;

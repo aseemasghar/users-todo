@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { addTodos } from "./redux/slices/todoSlice";
+import { addTodos,deleteTodo } from "./redux/slices/todoSlice";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -12,35 +12,58 @@ const App = () => {
 
   const todos = useSelector((state) => state.todo.todos);
   const dispatch = useDispatch();
+  const data ={
+    "name":name,
+    "age":age,
+    "properties":[
+       {
+          "location":loc1,
+          "unit_size":unit1
+       },
+       {
+          "location":loc2,
+          "unit_size":unit2
+       }
+    ]
+  }
+  // console.log(data);
   
 
-  const handleAdd =()=>{
-dispatch(addTodos(name,age,loc1,unit1,loc2,unit2));
+  const handleAdd =(e)=>{
+dispatch(addTodos(data));
+e.preventDefault();
+e.target.reset();
   }
-  console.log(name,age,loc1)
+
+  const handleDelete=(index)=>{
+dispatch(deleteTodo(index));
+  }
+ 
   
   return (
     <>
       <div className="container">
         <div>
           <h1 className="text-center my-2">Users Todo App</h1>
-          <form className="row g-3">
+          <form onSubmit={handleAdd} className="row g-3">
             <div className="col-md-4">
-              <input onChange={(e)=>setName(e.target.value)} type="text" className="form-control" placeholder="Name" />
+              <input required onChange={(e)=>setName(e.target.value)} type="text" className="form-control" placeholder="Name" />
             </div>
             <div className="col-md-2 ">
-              <input onChange={(e)=>setAge(e.target.value)} type="number" className="form-control" placeholder="Age" />
+              <input required onChange={(e)=>setAge(e.target.value)} type="number" className="form-control" placeholder="Age" />
             </div>
             <div className="row my-1">
               <div className="col-md-4">
                 <label className="form-label">Property 1</label>
                 <input
+                required
                 onChange={(e)=>setLoc1(e.target.value)}
                   type="text"
                   className="form-control mb-1"
                   placeholder="Location"
                 />
                 <input
+                required
                 onChange={(e)=>setUnit1(e.target.value)}
                   type="text"
                   className="form-control"
@@ -51,12 +74,14 @@ dispatch(addTodos(name,age,loc1,unit1,loc2,unit2));
               <div className="col-md-4">
                 <label className="form-label">Property 2</label>
                 <input
+                required
                 onChange={(e)=>setLoc2(e.target.value)}
                   type="text"
                   className="form-control mb-1"
                   placeholder="Location"
                 />
                 <input
+                required
                 onChange={(e)=>setUnit2(e.target.value)}
                   type="text"
                   className="form-control"
@@ -66,7 +91,8 @@ dispatch(addTodos(name,age,loc1,unit1,loc2,unit2));
             </div>
 
             <div className="col-12">
-              <button onClick={handleAdd} type="submit" className="btn btn-primary">
+            
+              <button  type="submit" className="btn btn-primary">
                 Add User
               </button>
             </div>
@@ -104,7 +130,7 @@ dispatch(addTodos(name,age,loc1,unit1,loc2,unit2));
                     })}
                         
                         <td>
-                          <button className="btn btn-danger">Dlete</button>
+                          <button onClick={()=>handleDelete(index)} className="btn btn-danger">Dlete</button>
                         </td>
                       </tr>
                     );
