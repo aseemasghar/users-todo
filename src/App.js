@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { addTodos,deleteTodo } from "./redux/slices/todoSlice";
+import { addUser,deleteUser } from "./redux/slices/userSlice";
+import { useAlert } from "react-alert";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -10,7 +11,10 @@ const App = () => {
   const [loc2, setLoc2] = useState("");
   const [unit2, setUnit2] = useState("");
 
-  const todos = useSelector((state) => state.todo.todos);
+  const alert = useAlert();
+ 
+
+  const todos = useSelector((state) => state.users.givenData);
   const dispatch = useDispatch();
   const data ={
     "name":name,
@@ -30,13 +34,15 @@ const App = () => {
   
 
   const handleAdd =(e)=>{
-dispatch(addTodos(data));
+dispatch(addUser(data));
+alert.success('Success');
 e.preventDefault();
 e.target.reset();
   }
 
   const handleDelete=(index)=>{
-dispatch(deleteTodo(index));
+dispatch(deleteUser(index));
+alert.success('User Deleted');
   }
  
   

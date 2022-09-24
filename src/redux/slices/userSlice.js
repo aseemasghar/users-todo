@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState ={
-    todos:[
+    givenData:[
         {
             "name":"John",
             "age":42,
@@ -62,23 +62,23 @@ const initialState ={
     ],
 }
 
-const todoSlice = createSlice({
-    name: "todoSlice",
+const userSlice = createSlice({
+    name: "userSlice",
     initialState: initialState,
     reducers: {
-addTodos: (state,action)=>{
+addUser: (state,action)=>{
  
-state.todos.push(action.payload);
+state.givenData.push(action.payload);
 },
-deleteTodo: (state,action)=>{
-   const newItems = state.todos.filter((item,index)=>{
+deleteUser: (state,action)=>{
+   const newItems = state.givenData.filter((item,index)=>{
       return index !== action.payload;
    })
-   state.todos = newItems;
+   state.givenData = newItems;
 }
 
     },
 })
 
-export const {addTodos,deleteTodo} = todoSlice.actions;
-export default todoSlice.reducer;
+export const {addUser,deleteUser} = userSlice.actions;
+export default userSlice.reducer;
